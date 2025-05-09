@@ -88,12 +88,12 @@ def construct_society(question: str) -> OwlRolePlaying:
             web_agent_model=models["web"],
             planning_agent_model=models["planning"],
         ).get_tools(),
-        *DocumentProcessingToolkit().get_tools(),
+        # *DocumentProcessingToolkit().get_tools(), # requires key
         # *VideoAnalysisToolkit(model=models["video"]).get_tools(), # This requires OpenAI Key
         # *AudioAnalysisToolkit().get_tools(), # This requires OpenAI Key
         *CodeExecutionToolkit(sandbox="subprocess", verbose=True).get_tools(),
         *ImageAnalysisToolkit(model=models["image"]).get_tools(),
-        *SearchToolkit(model=models["search"]).get_tools(),
+        # *SearchToolkit(model=models["search"]).get_tools(), # requires key
         *ExcelToolkit().get_tools(),
     ]
     
