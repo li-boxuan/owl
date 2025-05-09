@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
+import os
 
 from camel.models import ModelFactory
 from camel.toolkits import (
@@ -30,38 +31,52 @@ def construct_society(question: str) -> OwlRolePlaying:
     # Create models for different components
     models = {
         "user": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
-            model_type=ModelType.GPT_4O,
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="neulab/claude-3-7-sonnet-20250219",
+            api_key=os.getenv("API_KEY"),
+            url="https://cmu.litellm.ai",
             model_config_dict={"temperature": 0},
         ),
         "assistant": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
-            model_type=ModelType.GPT_4O,
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="neulab/claude-3-7-sonnet-20250219",
+            api_key=os.getenv("API_KEY"),
+            url="https://cmu.litellm.ai",
             model_config_dict={"temperature": 0},
         ),
         "web": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
-            model_type=ModelType.GPT_4O,
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="neulab/claude-3-7-sonnet-20250219",
+            api_key=os.getenv("API_KEY"),
+            url="https://cmu.litellm.ai",
             model_config_dict={"temperature": 0},
         ),
         "planning": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
-            model_type=ModelType.GPT_4O,
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="neulab/claude-3-7-sonnet-20250219",
+            api_key=os.getenv("API_KEY"),
+            url="https://cmu.litellm.ai",
             model_config_dict={"temperature": 0},
         ),
         "video": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
-            model_type=ModelType.GPT_4O,
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="neulab/claude-3-7-sonnet-20250219",
+            api_key=os.getenv("API_KEY"),
+            url="https://cmu.litellm.ai",
             model_config_dict={"temperature": 0},
         ),
         "image": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
-            model_type=ModelType.GPT_4O,
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="neulab/claude-3-7-sonnet-20250219",
+            api_key=os.getenv("API_KEY"),
+            url="https://cmu.litellm.ai",
             model_config_dict={"temperature": 0},
         ),
         "search": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI,
-            model_type=ModelType.GPT_4O,
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="neulab/claude-3-7-sonnet-20250219",
+            api_key=os.getenv("API_KEY"),
+            url="https://cmu.litellm.ai",
             model_config_dict={"temperature": 0},
         ),
     }
@@ -74,8 +89,8 @@ def construct_society(question: str) -> OwlRolePlaying:
             planning_agent_model=models["planning"],
         ).get_tools(),
         *DocumentProcessingToolkit().get_tools(),
-        *VideoAnalysisToolkit(model=models["video"]).get_tools(), # This requires OpenAI Key
-        *AudioAnalysisToolkit().get_tools(), # This requires OpenAI Key
+        # *VideoAnalysisToolkit(model=models["video"]).get_tools(), # This requires OpenAI Key
+        # *AudioAnalysisToolkit().get_tools(), # This requires OpenAI Key
         *CodeExecutionToolkit(sandbox="subprocess", verbose=True).get_tools(),
         *ImageAnalysisToolkit(model=models["image"]).get_tools(),
         *SearchToolkit(model=models["search"]).get_tools(),
