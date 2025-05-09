@@ -84,7 +84,7 @@ def construct_society(question: str) -> OwlRolePlaying:
     # Configure toolkits
     tools = [
         *WebToolkit(
-            headless=False,  # Set to True for headless mode (e.g., on remote servers)
+            headless=True,  # Set to True for headless mode (e.g., on remote servers)
             web_agent_model=models["web"],
             planning_agent_model=models["planning"],
         ).get_tools(),
