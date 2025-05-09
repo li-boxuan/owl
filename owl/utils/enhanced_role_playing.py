@@ -122,7 +122,12 @@ class OwlRolePlaying(RolePlaying):
     def _judge_if_reasoning_task(self, question: str) -> bool:
         r"""Judge if the question is a reasoning task."""
         
-        LLM = OpenAIModel(model_type=ModelType.O3_MINI)
+        LLM = ModelFactory.create(
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type="neulab/claude-3-7-sonnet-20250219",
+            api_key=os.getenv("API_KEY"),
+            url="https://cmu.litellm.ai",
+        )
         prompt = f"""
         Please judge whether the following question is a reasoning or coding task, which can be solved by reasoning without leveraging external resources, or is suitable for writing code to solve the task.
         If it is a reasoning or coding task, please return only "yes".
