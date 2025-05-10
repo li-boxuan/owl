@@ -75,7 +75,7 @@ def construct_society(question: str) -> OwlRolePlaying:
         *CodeExecutionToolkit(sandbox="subprocess", verbose=True).get_tools(),
         *ImageAnalysisToolkit(model=models["image"]).get_tools(),
         *ExcelToolkit().get_tools(),
-        *DocumentProcessingToolkit().get_tools(),
+        # *DocumentProcessingToolkit().get_tools(), # requires Chunkr API key
     ]
     
     # Configure agent roles and parameters
@@ -103,6 +103,16 @@ def construct_society(question: str) -> OwlRolePlaying:
 def main():
     instruction = 'Complete the task in /instruction/task.md' 
 
+    instruction = 'Complete the following task:\n'
+    with open('/instruction/task.md', 'r') as f:
+        instruction += f.read()
+
+    instruction += '\n\nIMPORTANT: If there are the-agent-company.com websites mentioned in the task description, NOTE that these websites are privately hosted.\n'
+    instruction += (
+        'IMPORTANT: If you want to close pop-ups, please press the escape key.\n'
+    )
+    instruction += 'IMPORTANT: You should NEVER ask for Human Help.\n'
+
     # load web dependencies
     dependencies = []
     with open('/utils/dependencies.yml', 'r') as f:
@@ -111,14 +121,16 @@ def main():
 
     # why can't we cache the login information? Unfortunately, OWL doesn't persist browser sessions
     # (every browser_simulation always starts from a clean state), so it has to login repeatedly.
+    if dependencies:
+        instruction += '\n\nIMPORTANT: You should use the following credentials to access the following services:\n'
     if 'owncloud' in dependencies:
-        instruction += '\n\n' + 'owncloud: Username: theagentcompany, Password: theagentcompany'
+        instruction += '\n\n' + 'ownCloud Username: theagentcompany, Password: theagentcompany'
     if 'rocketchat' in dependencies:
-        instruction += '\n\n' + 'rocketchat: Username: theagentcompany, Password: theagentcompany'
+        instruction += '\n\n' + 'RocketChat Username: theagentcompany, Password: theagentcompany'
     if 'gitlab' in dependencies:
-        instruction += '\n\n' + 'gitlab: Username: root, Password: theagentcompany'
+        instruction += '\n\n' + 'GitLab Username: root, Password: theagentcompany'
     if 'plane' in dependencies:
-        instruction += '\n\n' + 'plane: Email: agent@company.com, Password: theagentcompany'
+        instruction += '\n\n' + 'Plane Email: agent@company.com, Password: theagentcompany'
     
     # Construct the society
     society = construct_society(instruction)
