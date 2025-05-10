@@ -106,7 +106,7 @@ def main():
     # load web dependencies
     dependencies = []
     with open('/utils/dependencies.yml', 'r') as f:
-        dependencies = yaml.load(f)
+        dependencies = yaml.safe_load(f)
     print(f'dependencies: {dependencies}')
 
     # why can't we cache the login information? Unfortunately, OWL doesn't persist browser sessions
