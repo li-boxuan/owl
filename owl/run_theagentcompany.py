@@ -1,5 +1,6 @@
 import os
 import json
+import yaml
 
 from camel.models import ModelFactory
 from camel.toolkits import (
@@ -64,12 +65,13 @@ def construct_society(question: str) -> OwlRolePlaying:
     }
     
     # Configure toolkits
-    tools = [
-        *WebToolkit(
+    web_toolkit = WebToolkit(
             headless=True,
             web_agent_model=models["web"],
             planning_agent_model=models["planning"],
-        ).get_tools(),
+        )
+    tools = [
+        *web_toolkit.get_tools(),
         *CodeExecutionToolkit(sandbox="subprocess", verbose=True).get_tools(),
         *ImageAnalysisToolkit(model=models["image"]).get_tools(),
         *ExcelToolkit().get_tools(),
@@ -100,9 +102,28 @@ def construct_society(question: str) -> OwlRolePlaying:
 
 def main():
     instruction = 'Complete the task in /instruction/task.md' 
+
+    # load web dependencies
+    dependencies = []
+    with open('/utils/dependencies.yml', 'r') as f:
+        dependencies = yaml.load(f)
+    print(f'dependencies: {dependencies}')
+
+    # why can't we cache the login information? Unfortunately, OWL doesn't persist browser sessions
+    # (every browser_simulation always starts from a clean state), so it has to login repeatedly.
+    if 'owncloud' in dependencies:
+        instruction += '\n\n' + 'owncloud: Username: theagentcompany, Password: theagentcompany'
+    if 'rocketchat' in dependencies:
+        instruction += '\n\n' + 'rocketchat: Username: theagentcompany, Password: theagentcompany'
+    if 'gitlab' in dependencies:
+        instruction += '\n\n' + 'gitlab: Username: root, Password: theagentcompany'
+    if 'plane' in dependencies:
+        instruction += '\n\n' + 'plane: Email: agent@company.com, Password: theagentcompany'
     
-    # Construct and run the society
+    # Construct the society
     society = construct_society(instruction)
+
+    # Run the society
     _, chat_history, token_count = run_society(society)
 
     # save chat history and token count to /output/chat_history.json and /output/token_count.json
