@@ -33,7 +33,7 @@ def construct_society(question: str) -> OwlRolePlaying:
             model_type="neulab/claude-3-7-sonnet-20250219",
             api_key=os.getenv("API_KEY"),
             url="https://cmu.litellm.ai",
-            model_config_dict={"temperature": 0},
+            model_config_dict={"temperature": 0, "modify_params": True},
         ) 
     
     # the following tools are not necessarily needed for the task, but they are included
