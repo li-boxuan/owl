@@ -30,7 +30,7 @@ def construct_society(question: str) -> OwlRolePlaying:
     
     model = ModelFactory.create(
             model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
-            model_type="neulab/claude-3-7-sonnet-20250219",
+            model_type="neulab/openai/gpt-4o",
             api_key=os.getenv("API_KEY"),
             url="https://cmu.litellm.ai",
             model_config_dict={"temperature": 0},

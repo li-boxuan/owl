@@ -124,7 +124,6 @@ class LiteLLMModel(BaseModelBackend):
             base_url=self._url,
             model=self.model_type,
             messages=messages,
-            modify_params=True,
             **self.model_config_dict,
         )
         response = self._convert_response_from_litellm_to_openai(response)
