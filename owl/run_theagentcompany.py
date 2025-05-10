@@ -12,6 +12,9 @@ from camel.toolkits import (
 )
 from camel.types import ModelPlatformType
 
+from owl.camel.toolkits.audio_analysis_toolkit import AudioAnalysisToolkit
+from owl.camel.toolkits.search_toolkit import SearchToolkit
+from owl.camel.toolkits.video_analysis_toolkit import VideoAnalysisToolkit
 from utils import OwlRolePlaying, run_society
 
 
@@ -25,62 +28,34 @@ def construct_society(question: str) -> OwlRolePlaying:
         OwlRolePlaying: A configured society of agents ready to address the question.
     """
     
-    # Create models for different components
-    models = {
-        "user": ModelFactory.create(
+    model = ModelFactory.create(
             model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
             model_type="neulab/claude-3-7-sonnet-20250219",
             api_key=os.getenv("API_KEY"),
             url="https://cmu.litellm.ai",
             model_config_dict={"temperature": 0},
-        ),
-        "assistant": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
-            model_type="neulab/claude-3-7-sonnet-20250219",
-            api_key=os.getenv("API_KEY"),
-            url="https://cmu.litellm.ai",
-            model_config_dict={"temperature": 0},
-        ),
-        "web": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
-            model_type="neulab/claude-3-7-sonnet-20250219",
-            api_key=os.getenv("API_KEY"),
-            url="https://cmu.litellm.ai",
-            model_config_dict={"temperature": 0},
-        ),
-        "planning": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
-            model_type="neulab/claude-3-7-sonnet-20250219",
-            api_key=os.getenv("API_KEY"),
-            url="https://cmu.litellm.ai",
-            model_config_dict={"temperature": 0},
-        ),
-        "image": ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
-            model_type="neulab/claude-3-7-sonnet-20250219",
-            api_key=os.getenv("API_KEY"),
-            url="https://cmu.litellm.ai",
-            model_config_dict={"temperature": 0},
-        ),
-    }
+        ) 
     
-    # Configure toolkits
-    web_toolkit = WebToolkit(
-            headless=True,
-            web_agent_model=models["web"],
-            planning_agent_model=models["planning"],
-        )
+    # the following tools are not necessarily needed for the task, but they are included
+    # here because they are the set of tools for GAIA evaluation by OWL
     tools = [
-        *web_toolkit.get_tools(),
+        *WebToolkit(
+            headless=True,  # Set to True for headless mode (e.g., on remote servers)
+            web_agent_model=model,
+            planning_agent_model=model,
+        ).get_tools(),
+        *DocumentProcessingToolkit().get_tools(),
+        *VideoAnalysisToolkit(model=model).get_tools(),  # This requires OpenAI Key
+        *AudioAnalysisToolkit().get_tools(),  # This requires OpenAI Key
         *CodeExecutionToolkit(sandbox="subprocess", verbose=True).get_tools(),
-        *ImageAnalysisToolkit(model=models["image"]).get_tools(),
+        *ImageAnalysisToolkit(model=model).get_tools(),
+        *SearchToolkit(model=model).get_tools(),
         *ExcelToolkit().get_tools(),
-        # *DocumentProcessingToolkit().get_tools(), # requires Chunkr API key
     ]
     
     # Configure agent roles and parameters
-    user_agent_kwargs = {"model": models["user"]}
-    assistant_agent_kwargs = {"model": models["assistant"], "tools": tools}
+    user_agent_kwargs = {"model": model}
+    assistant_agent_kwargs = {"model": model, "tools": tools}
     
     # Configure task parameters
     task_kwargs = {
