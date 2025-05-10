@@ -997,6 +997,7 @@ class ChatAgent(BaseAgent):
                 response = self.model_backend.run(openai_messages)
                 break
             except Exception as exc:
+                logger.error(f"Error: {exc}")
                 logger.error(
                     f"An error occurred while running model "
                     f"{self.model_backend.model_type}, "
