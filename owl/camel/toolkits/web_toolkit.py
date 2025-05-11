@@ -454,7 +454,7 @@ class BaseBrowser:
         
     
     @retry(PlaywrightError, delay=1, logger=logger)
-    def get_screenshot(self, save_image: bool = False) -> Tuple[Image.Image, Union[str, None]]:
+    def get_screenshot(self, save_image: bool = True) -> Tuple[Image.Image, Union[str, None]]:
         r"""Get a screenshot of the current page.
         
         Args:
@@ -476,7 +476,7 @@ class BaseBrowser:
             
             # get formatted time: mmddhhmmss
             timestamp = datetime.datetime.now().strftime("%m%d%H%M%S")
-            file_path = os.path.join(self.cache_dir, f"{url_name}_{timestamp}.png")
+            file_path = os.path.join("output", f"{url_name}_{timestamp}.png")
             with open(file_path, "wb") as f:
                 image.save(f, "PNG")
             f.close()
