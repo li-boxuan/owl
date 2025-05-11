@@ -38,12 +38,13 @@ def construct_society(question: str) -> OwlRolePlaying:
     
     # the following tools are not necessarily needed for the task, but they are included
     # here because they are the set of tools for GAIA evaluation by OWL
+    web_toolkit = WebToolkit(
+        headless=True,  # Set to True for headless mode (e.g., on remote servers)
+        web_agent_model=model,
+        planning_agent_model=model,
+    )
     tools = [
-        *WebToolkit(
-            headless=True,  # Set to True for headless mode (e.g., on remote servers)
-            web_agent_model=model,
-            planning_agent_model=model,
-        ).get_tools(),
+        *web_toolkit.get_tools(),
         *DocumentProcessingToolkit().get_tools(),
         *VideoAnalysisToolkit(model=model).get_tools(),  # This requires OpenAI Key
         *AudioAnalysisToolkit().get_tools(),  # This requires OpenAI Key
@@ -72,7 +73,38 @@ def construct_society(question: str) -> OwlRolePlaying:
         assistant_agent_kwargs=assistant_agent_kwargs,
     )
     
-    return society
+    return society, web_toolkit
+
+
+def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
+    r"""Pre-login to the websites.
+    
+    Args:
+        web_toolkit (WebToolkit): The web toolkit to use.
+        dependencies (List[str]): The dependencies to use.
+    """ 
+    for dependency in dependencies:
+        if dependency == "owncloud":
+            web_toolkit.open_url("http://the-agent-company.com:8092")
+            web_toolkit.fill_input_id(34, "theagentcompany")
+            web_toolkit.fill_input_id(35, "theagentcompany")
+            web_toolkit.click_id(36)
+        elif dependency == "rocketchat":
+            web_toolkit.open_url("http://the-agent-company.com:3000")
+            web_toolkit.fill_input_id(30, "theagentcompany")
+            web_toolkit.fill_input_id(31, "theagentcompany")
+            web_toolkit.click_id(23)
+        elif dependency == "gitlab":
+            web_toolkit.open_url("http://the-agent-company.com:8929")
+            web_toolkit.fill_input_id(27, "root@local")
+            web_toolkit.fill_input_id(30, "theagentcompany")
+            web_toolkit.click_id(34)
+        elif dependency == "plane":
+            web_toolkit.open_url("http://the-agent-company.com:8091")
+            web_toolkit.fill_input_id(20, "agent@company.com")
+            web_toolkit.click_id(21)
+            web_toolkit.fill_input_id(27, "theagentcompany")
+            web_toolkit.click_id(29)
 
 
 def main():
@@ -108,7 +140,10 @@ def main():
         instruction += '\n\n' + 'Plane Email: agent@company.com, Password: theagentcompany'
     
     # Construct the society
-    society = construct_society(instruction)
+    society, web_toolkit = construct_society(instruction)
+
+    # Login to the websites
+    pre_login(web_toolkit, dependencies)
 
     # Run the society
     _, chat_history, token_count = run_society(society)
