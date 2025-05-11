@@ -95,6 +95,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             time.sleep(1)
             web_toolkit.browser.fill_input_id(35, "theagentcompany")
             time.sleep(1)
+            print("login to owncloud successfully")
         elif dependency == "rocketchat":
             web_toolkit.browser.visit_page("http://the-agent-company.com:3000")
             web_toolkit.browser.get_interactive_elements()
@@ -103,6 +104,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             time.sleep(1)
             web_toolkit.browser.fill_input_id(31, "theagentcompany")
             time.sleep(1)
+            print("login to rocketchat successfully")
         elif dependency == "gitlab":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8929")
             web_toolkit.browser.get_interactive_elements()
@@ -111,14 +113,15 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             time.sleep(1)
             web_toolkit.browser.fill_input_id(30, "theagentcompany")
             time.sleep(1)
+            print("login to gitlab successfully")
         elif dependency == "plane":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8091")
             web_toolkit.browser.get_interactive_elements()
             time.sleep(1)
             web_toolkit.browser.fill_input_id(20, "agent@company.com")
-            web_toolkit.browser.get_interactive_elements()
             time.sleep(1)
             web_toolkit.browser.fill_input_id(27, "theagentcompany")
+            print("login to plane successfully")
     web_toolkit.browser.close()
 
 

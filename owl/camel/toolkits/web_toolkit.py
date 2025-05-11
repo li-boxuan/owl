@@ -798,7 +798,8 @@ class BaseBrowser:
     
     def close(self):
         self.browser.close()
-        self.playwright.stop()
+        # Bug: https://github.com/camel-ai/owl/issues/462
+        # self.playwright.stop()
 
     
     def show_interactive_elements(self):
