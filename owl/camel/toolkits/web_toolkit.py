@@ -1174,8 +1174,9 @@ Your output should be in json format, including the following fields:
         task_completed = False
         detailed_plan = self._task_planning(task_prompt, start_url)
         logger.debug(f"Detailed plan: {detailed_plan}")
-        
-        self.browser.init()
+
+        # TAC: do not init every time, because it will cause the cookie to be cleared
+        # self.browser.init()
         self.browser.visit_page(start_url)
         
         for i in range(round_limit):
@@ -1230,7 +1231,7 @@ Your output should be in json format, including the following fields:
         else:
             simulation_result = self._get_final_answer(task_prompt)
         
-        self.browser.close()
+        # self.browser.close()
         return simulation_result
         
     
