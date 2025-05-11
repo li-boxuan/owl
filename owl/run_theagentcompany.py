@@ -120,6 +120,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             time.sleep(1)
             web_toolkit.browser.fill_input_id(20, "agent@company.com")
             time.sleep(1)
+            web_toolkit.browser.get_interactive_elements()
             web_toolkit.browser.fill_input_id(27, "theagentcompany")
             print("login to plane successfully")
     web_toolkit.browser.close()
