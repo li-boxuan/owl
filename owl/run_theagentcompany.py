@@ -84,6 +84,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
         web_toolkit (WebToolkit): The web toolkit to use.
         dependencies (List[str]): The dependencies to use.
     """ 
+    web_toolkit.browser.init()
     for dependency in dependencies:
         if dependency == "owncloud":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8092")
@@ -106,6 +107,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             web_toolkit.browser.click_id(21)
             web_toolkit.browser.fill_input_id(27, "theagentcompany")
             web_toolkit.browser.click_id(29)
+    web_toolkit.browser.close()
 
 
 def main():
