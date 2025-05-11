@@ -40,6 +40,7 @@ bash /utils/init.sh
 python owl/run_theagentcompany.py
 
 # run TAC evaluation
+mkdir -p output
 LITELLM_API_KEY=${ENV_API_KEY} \
 LITELLM_BASE_URL=${MODEL_BASE_URL} \
 LITELLM_MODEL=${ENV_MODEL_TYPE} \
