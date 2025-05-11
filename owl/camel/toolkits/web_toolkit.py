@@ -609,7 +609,7 @@ class BaseBrowser:
         target = self.page.locator(f"[__elementId='{identifier}']")
 
         try:
-           target.wait_for(timeout=5000)
+           target.wait_for(timeout=10000)
         except TimeoutError:
             raise ValueError("No such element.") from None
 
