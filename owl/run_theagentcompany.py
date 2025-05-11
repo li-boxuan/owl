@@ -85,42 +85,49 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
         web_toolkit (WebToolkit): The web toolkit to use.
         dependencies (List[str]): The dependencies to use.
     """ 
+    def find_key_by_tag_name(elements_dict, target_tag_name):
+        for key, value in elements_dict.items():
+            if value.get('tag_name') == target_tag_name:
+                return key
+        raise ValueError(f"No element with tag name {target_tag_name} found")
+
     for dependency in dependencies:
         if dependency == "owncloud":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8092")
-            web_toolkit.browser.get_interactive_elements()
+            elements = web_toolkit.browser.get_interactive_elements()
             time.sleep(1)
-            web_toolkit.browser.fill_input_id(34, "theagentcompany")
+            web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=text"), "theagentcompany")
             time.sleep(1)
-            web_toolkit.browser.fill_input_id(35, "theagentcompany")
+            web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=password"), "theagentcompany")
             time.sleep(1)
             print("login to owncloud successfully")
         elif dependency == "rocketchat":
             web_toolkit.browser.visit_page("http://the-agent-company.com:3000")
-            web_toolkit.browser.get_interactive_elements()
+            elements = web_toolkit.browser.get_interactive_elements()
             time.sleep(1)
-            web_toolkit.browser.fill_input_id(30, "theagentcompany")
+            web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=text"), "theagentcompany")
             time.sleep(1)
-            web_toolkit.browser.fill_input_id(31, "theagentcompany")
+            web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=password"), "theagentcompany")
             time.sleep(1)
             print("login to rocketchat successfully")
         elif dependency == "gitlab":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8929")
-            web_toolkit.browser.get_interactive_elements()
+            elements = web_toolkit.browser.get_interactive_elements()
             time.sleep(1)
-            web_toolkit.browser.fill_input_id(27, "root@local")
+            web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=text"), "root@local")
             time.sleep(1)
-            web_toolkit.browser.fill_input_id(30, "theagentcompany")
+            web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=password"), "theagentcompany")
             time.sleep(1)
             print("login to gitlab successfully")
         elif dependency == "plane":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8091")
-            web_toolkit.browser.get_interactive_elements()
+            elements = web_toolkit.browser.get_interactive_elements()
             time.sleep(1)
-            web_toolkit.browser.fill_input_id(20, "agent@company.com")
+            web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=email"), "agent@company.com")
             time.sleep(1)
-            web_toolkit.browser.get_interactive_elements()
-            web_toolkit.browser.fill_input_id(27, "theagentcompany")
+            elements = web_toolkit.browser.get_interactive_elements()
+            web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=password"), "theagentcompany")
+            time.sleep(1)
             print("login to plane successfully")
 
 
