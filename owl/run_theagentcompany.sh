@@ -35,4 +35,4 @@ LITELLM_API_KEY=${ENV_API_KEY} \
 LITELLM_BASE_URL=${MODEL_BASE_URL} \
 LITELLM_MODEL=${ENV_MODEL_TYPE} \
 DECRYPTION_KEY='theagentcompany is all you need' \
-python /utils/eval.py --trajectory_path /output/chat_history.json --result_path /output/eval_result.json
+python_default /utils/eval.py --trajectory_path ./output/chat_history.json --result_path ./output/eval_result.json

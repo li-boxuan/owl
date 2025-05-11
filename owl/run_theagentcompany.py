@@ -164,10 +164,11 @@ def main():
     # Run the society
     _, chat_history, token_count = run_society(society, round_limit=1)
 
-    # save chat history and token count to /output/chat_history.json and /output/token_count.json
-    with open('/output/chat_history.json', 'w') as f:
+    # save chat history and token count to ./output/chat_history.json and ./output/token_count.json
+    os.makedirs('./output', exist_ok=True)
+    with open('./output/chat_history.json', 'w') as f:
         json.dump(chat_history, f)
-    with open('/output/token_count.json', 'w') as f:
+    with open('./output/token_count.json', 'w') as f:
         json.dump(token_count, f)
 
 
