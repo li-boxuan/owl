@@ -34,7 +34,7 @@ def construct_society(question: str) -> OwlRolePlaying:
             model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
             model_type=os.getenv("MODEL_TYPE"),
             api_key=os.getenv("API_KEY"),
-            url="https://cmu.litellm.ai",
+            url=os.getenv("MODEL_BASE_URL"),
             model_config_dict={"temperature": 0},
         ) 
     
@@ -143,10 +143,8 @@ def main():
         dependencies = yaml.safe_load(f)
     print(f'dependencies: {dependencies}')
 
-    # why can't we cache the login information? Unfortunately, OWL doesn't persist browser sessions
-    # (every browser_simulation always starts from a clean state), so it has to login repeatedly.
     if dependencies:
-        instruction += '\n\nIMPORTANT: You should use the following credentials to access the following services:\n'
+        instruction += '\n\nIMPORTANT: You may not need them, but just in case, here are the credentials for the following services:\n'
     if 'owncloud' in dependencies:
         instruction += '\n\n' + 'ownCloud Username: theagentcompany, Password: theagentcompany'
     if 'rocketchat' in dependencies:
@@ -159,6 +157,9 @@ def main():
     # Construct the society
     society, web_toolkit = construct_society(instruction)
     web_toolkit.browser.init()
+
+    # Initialize task environment (required by TAC)
+    os.system(f'SERVER_HOSTNAME=localhost LITELLM_API_KEY={os.getenv("ENV_API_KEY")} LITELLM_BASE_URL={os.getenv("MODEL_BASE_URL")} LITELLM_MODEL={os.getenv("ENV_MODEL_TYPE")} bash /utils/init.sh')
 
     # Login to the websites
     pre_login(web_toolkit, dependencies)
