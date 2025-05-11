@@ -2,6 +2,7 @@ import os
 import json
 from typing import List
 import yaml
+import time
 
 from camel.models import ModelFactory
 from camel.toolkits import (
@@ -89,36 +90,49 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
         if dependency == "owncloud":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8092")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.fill_input_id(34, "theagentcompany")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.fill_input_id(35, "theagentcompany")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.click_id(36)
         elif dependency == "rocketchat":
             web_toolkit.browser.visit_page("http://the-agent-company.com:3000")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.fill_input_id(30, "theagentcompany")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.fill_input_id(31, "theagentcompany")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.click_id(23)
         elif dependency == "gitlab":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8929")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.fill_input_id(27, "root@local")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.fill_input_id(30, "theagentcompany")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.click_id(34)
         elif dependency == "plane":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8091")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.fill_input_id(20, "agent@company.com")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.click_id(21)
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.fill_input_id(27, "theagentcompany")
             web_toolkit.browser.get_interactive_elements()
+            time.sleep(3)
             web_toolkit.browser.click_id(29)
     web_toolkit.browser.close()
 
