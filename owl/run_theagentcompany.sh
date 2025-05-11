@@ -8,6 +8,9 @@ git clone https://github.com/li-boxuan/owl.git
 # Change directory into project directory
 cd owl
 
+# Pull latest changes
+git pull
+
 python -m venv owl_env
 source owl_env/bin/activate
 
