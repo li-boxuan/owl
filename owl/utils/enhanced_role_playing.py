@@ -100,8 +100,11 @@ class OwlRolePlaying(RolePlaying):
         # If the task is a reasoning task, the assistant agent should use the reasoning model O3-MINI
         if is_reasoning_task:
             assistant_agent_kwargs['model'] = ModelFactory.create(
-                model_platform=ModelPlatformType.OPENAI,
-                model_type=ModelType.O3_MINI,
+                model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+                model_type=os.getenv("REASONING_MODEL_TYPE"),
+                api_key=os.getenv("API_KEY"),
+                url=os.getenv("MODEL_BASE_URL"),
+                model_config_dict={"temperature": 0},
             )
 
         self.assistant_agent = ChatAgent(
@@ -123,11 +126,12 @@ class OwlRolePlaying(RolePlaying):
         r"""Judge if the question is a reasoning task."""
         
         LLM = ModelFactory.create(
-            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
-            model_type="neulab/claude-3-7-sonnet-20250219",
-            api_key=os.getenv("API_KEY"),
-            url="https://cmu.litellm.ai",
-        )
+                model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+                model_type=os.getenv("REASONING_MODEL_TYPE"),
+                api_key=os.getenv("API_KEY"),
+                url=os.getenv("MODEL_BASE_URL"),
+                model_config_dict={"temperature": 0},
+            )
         prompt = f"""
         Please judge whether the following question is a reasoning or coding task, which can be solved by reasoning without leveraging external resources, or is suitable for writing code to solve the task.
         If it is a reasoning or coding task, please return only "yes".
