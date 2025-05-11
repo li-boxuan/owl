@@ -164,7 +164,7 @@ def main():
     pre_login(web_toolkit, dependencies)
 
     # Run the society
-    _, chat_history, token_count = run_society(society)
+    _, chat_history, token_count = run_society(society, round_limit=1)
 
     # save chat history and token count to /output/chat_history.json and /output/token_count.json
     with open('/output/chat_history.json', 'w') as f:
