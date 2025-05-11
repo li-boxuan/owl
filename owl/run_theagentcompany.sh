@@ -19,6 +19,14 @@ export MODEL_TYPE="neulab/gpt-4o-2024-08-06"
 export MODEL_BASE_URL="https://cmu.litellm.ai"
 export ENV_MODEL_TYPE="openai/neulab/claude-3-5-sonnet-20241022"
 
+# Initialize TAC task environment
+SERVER_HOSTNAME=localhost \
+LITELLM_API_KEY=${ENV_API_KEY} \
+LITELLM_BASE_URL=${MODEL_BASE_URL} \
+LITELLM_MODEL=${ENV_MODEL_TYPE} \
+bash /utils/init.sh
+
+
 # run TAC task
 python owl/run_theagentcompany.py
 

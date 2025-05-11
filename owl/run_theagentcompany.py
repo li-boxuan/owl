@@ -158,9 +158,6 @@ def main():
     society, web_toolkit = construct_society(instruction)
     web_toolkit.browser.init()
 
-    # Initialize task environment (required by TAC)
-    os.system(f'SERVER_HOSTNAME=localhost LITELLM_API_KEY={os.getenv("ENV_API_KEY")} LITELLM_BASE_URL={os.getenv("MODEL_BASE_URL")} LITELLM_MODEL={os.getenv("ENV_MODEL_TYPE")} bash /utils/init.sh')
-
     # Login to the websites
     pre_login(web_toolkit, dependencies)
 
