@@ -1,5 +1,6 @@
 import os
 import json
+from typing import List
 import yaml
 
 from camel.models import ModelFactory
