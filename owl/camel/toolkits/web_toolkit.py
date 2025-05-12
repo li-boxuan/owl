@@ -466,6 +466,7 @@ class BaseBrowser:
 
         image_data = self.page.screenshot(timeout=60000)
         image = Image.open(io.BytesIO(image_data))
+        logger.info(f"Getting screenshot of {self.page_url}")
         
         file_path = None
         if save_image:
@@ -477,7 +478,7 @@ class BaseBrowser:
             # get formatted time: mmddhhmmss
             timestamp = datetime.datetime.now().strftime("%m%d%H%M%S")
             file_path = os.path.join("output", f"{url_name}_{timestamp}.png")
-            print(f"Saving screenshot to {file_path}")
+            logger.info(f"Saving screenshot to {file_path}")
             with open(file_path, "wb") as f:
                 image.save(f, "PNG")
             f.close()
@@ -966,6 +967,7 @@ Here are some tips for you:
         """
         
         # get current state
+        logger.info(f"Getting SOM screenshot of {self.browser.page_url}")
         som_screenshot, som_screenshot_path = self.browser.get_som_screenshot(save_image=True)
         img = _reload_image(som_screenshot)
         message = BaseMessage.make_user_message(
