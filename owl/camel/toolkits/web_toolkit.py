@@ -797,7 +797,8 @@ class BaseBrowser:
         
     
     def close(self):
-        self.browser.close()
+        pass
+        # self.browser.close()
         # Bug: https://github.com/camel-ai/owl/issues/462
         # self.playwright.stop()
 

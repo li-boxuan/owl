@@ -184,6 +184,10 @@ def main():
     with open('./output/token_count.json', 'w') as f:
         json.dump(token_count, f)
 
+    # gracefully close the browser
+    web_toolkit.browser.close()
+    web_toolkit.playwright.stop()
+
 
 if __name__ == "__main__":
     main()
