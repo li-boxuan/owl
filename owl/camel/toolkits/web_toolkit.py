@@ -573,7 +573,7 @@ class BaseBrowser:
         """
         
         self._wait_for_load()
-        screenshot, _ = self.get_screenshot(save_image=False)
+        screenshot, _ = self.get_screenshot(save_image=True)
         rects = self.get_interactive_elements()
         
         file_path = None
