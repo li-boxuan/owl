@@ -102,6 +102,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             time.sleep(1)
             assert web_toolkit.browser.get_url().startswith("http://the-agent-company.com:8092/index.php/apps/files")
             print("login to owncloud successfully")
+            web_toolkit.browser.get_screenshot()
         elif dependency == "rocketchat":
             web_toolkit.browser.visit_page("http://the-agent-company.com:3000")
             elements = web_toolkit.browser.get_interactive_elements()
@@ -112,6 +113,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             time.sleep(1)
             assert web_toolkit.browser.get_url() == "http://the-agent-company.com:3000/home"
             print("login to rocketchat successfully")
+            web_toolkit.browser.get_screenshot()
         elif dependency == "gitlab":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8929")
             elements = web_toolkit.browser.get_interactive_elements()
@@ -122,6 +124,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             time.sleep(1)
             assert web_toolkit.browser.get_url() == "http://the-agent-company.com:8929/"
             print("login to gitlab successfully")
+            web_toolkit.browser.get_screenshot()
         elif dependency == "plane":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8091")
             elements = web_toolkit.browser.get_interactive_elements()
@@ -133,6 +136,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             time.sleep(1)
             assert web_toolkit.browser.get_url() == "http://the-agent-company.com:8091/tac/"
             print("login to plane successfully")
+            web_toolkit.browser.get_screenshot()
 
 
 def main():
