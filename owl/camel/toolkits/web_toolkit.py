@@ -1217,6 +1217,9 @@ Your output should be in json format, including the following fields:
                     "info": info,
                     "current_url": self.browser.get_url()
                 }
+
+                self.browser.get_screenshot()
+
                 self.history.append(trajectory_info)
                 
                 # replan the task if necessary
