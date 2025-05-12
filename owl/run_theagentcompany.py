@@ -154,16 +154,9 @@ def main():
         dependencies = yaml.safe_load(f)
     print(f'dependencies: {dependencies}')
 
-    if dependencies:
-        instruction += '\n\nIMPORTANT: You may not need them, but just in case, here are the credentials for the following services:\n'
-    if 'owncloud' in dependencies:
-        instruction += '\n\n' + 'ownCloud Username: theagentcompany, Password: theagentcompany'
-    if 'rocketchat' in dependencies:
-        instruction += '\n\n' + 'RocketChat Username: theagentcompany, Password: theagentcompany'
     if 'gitlab' in dependencies:
-        instruction += '\n\n' + 'GitLab Username: root, Password: theagentcompany'
-    if 'plane' in dependencies:
-        instruction += '\n\n' + 'Plane Email: agent@company.com, Password: theagentcompany'
+        instruction += "IMPORTANT: You are already signed in to Gitlab, but here are the sign-in credentials for your reference - Gitlab username is 'root' and password is 'theagentcompany'\n"
+
     
     # Construct the society
     society, web_toolkit = construct_society(instruction)
