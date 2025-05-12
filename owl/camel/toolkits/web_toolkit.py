@@ -477,9 +477,8 @@ class BaseBrowser:
             
             # get formatted time: mmddhhmmss
             timestamp = datetime.datetime.now().strftime("%m%d%H%M%S")
-            os.makedirs("output", exist_ok=True)
-            file_path = os.path.join("output", f"{url_name}_{timestamp}.png")
-            logger.info(f"Saving screenshot to {file_path}")
+            os.makedirs("output/screenshots", exist_ok=True)
+            file_path = os.path.join("output", "screenshots", f"{url_name}_{timestamp}.png")
             with open(file_path, "wb") as f:
                 image.save(f, "PNG")
             f.close()
@@ -1218,8 +1217,6 @@ Your output should be in json format, including the following fields:
                     "info": info,
                     "current_url": self.browser.get_url()
                 }
-
-                self.browser.get_screenshot()
 
                 self.history.append(trajectory_info)
                 
