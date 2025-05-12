@@ -477,6 +477,7 @@ class BaseBrowser:
             # get formatted time: mmddhhmmss
             timestamp = datetime.datetime.now().strftime("%m%d%H%M%S")
             file_path = os.path.join("output", f"{url_name}_{timestamp}.png")
+            print(f"Saving screenshot to {file_path}")
             with open(file_path, "wb") as f:
                 image.save(f, "PNG")
             f.close()

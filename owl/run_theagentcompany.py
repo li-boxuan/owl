@@ -185,8 +185,8 @@ def main():
         json.dump(token_count, f)
 
     # gracefully close the browser
-    web_toolkit.browser.close()
-    web_toolkit.playwright.stop()
+    web_toolkit.browser.browser.close()
+    web_toolkit.browser.playwright.stop()
 
 
 if __name__ == "__main__":
