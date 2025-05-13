@@ -443,8 +443,14 @@ def run_society(society: RolePlaying, round_limit: int = 15) -> Tuple[str, List[
             input_msg = assistant_response.msg
     except Exception as e:
         logger.error(f"Error in run_society: {e}")
+        _data = {
+            'user': 'Error in run_society, please check the error message in assistant response',
+            'assistant': str(e),
+            'tool_calls': []
+        }
+        chat_history.append(_data)
     
-    answer = chat_history[-1]['assistant'] if chat_history else ""
+    answer = chat_history[-1]['assistant']
     token_info = {
         "completion_token_count": overall_completion_token_count,
         "prompt_token_count": overall_prompt_token_count
