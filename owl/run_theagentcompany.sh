@@ -21,9 +21,7 @@ playwright install-deps
 export MODEL_BASE_URL="https://cmu.litellm.ai"
 # major model, same as GAIA 58.18 version
 export MODEL_TYPE="neulab/gpt-4o-2024-08-06"
-# reasoning model, same as GAIA 58.18 version
-# FIXME: use o3-mini
-export REASONING_MODEL_TYPE="neulab/o1-mini"
+# note: reasoning model is hard-coded by OWL as o3-mini
 
 # this is for llm-evaluation and npcs, which we always use claude-3-5-sonnet-20241022
 export ENV_MODEL_TYPE="openai/neulab/claude-3-5-sonnet-20241022"
