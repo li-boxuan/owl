@@ -132,6 +132,8 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=email"), "agent@company.com")
             time.sleep(5)
             elements = web_toolkit.browser.get_interactive_elements()
+            # the next step often fails, let's print out the elements for debugging purposes
+            print(f'elements: {elements}')
             web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=password"), "theagentcompany")
             time.sleep(5)
             assert web_toolkit.browser.get_url() == "http://the-agent-company.com:8091/tac/"
