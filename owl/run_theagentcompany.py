@@ -84,7 +84,7 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
     Args:
         web_toolkit (WebToolkit): The web toolkit to use.
         dependencies (List[str]): The dependencies to use.
-    """ 
+    """
     def find_key_by_tag_name(elements_dict, target_tag_name):
         for key, value in elements_dict.items():
             if value.get('tag_name') == target_tag_name:
@@ -157,6 +157,9 @@ def main():
     with open('/utils/dependencies.yml', 'r') as f:
         dependencies = yaml.safe_load(f)
     print(f'dependencies: {dependencies}')
+
+    if not dependencies:
+        dependencies = []
 
     if 'gitlab' in dependencies:
         instruction += "IMPORTANT: You are already signed in to Gitlab, but here are the sign-in credentials for your reference - Gitlab username is 'root' and password is 'theagentcompany'\n"
