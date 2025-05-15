@@ -33,6 +33,8 @@ LITELLM_BASE_URL=${MODEL_BASE_URL} \
 LITELLM_MODEL=${ENV_MODEL_TYPE} \
 bash /utils/init.sh
 
+# sleep 10 seconds
+sleep 10
 
 # run TAC task
 python owl/run_theagentcompany.py
