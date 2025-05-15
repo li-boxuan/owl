@@ -128,12 +128,12 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
         elif dependency == "plane":
             web_toolkit.browser.visit_page("http://the-agent-company.com:8091")
             elements = web_toolkit.browser.get_interactive_elements()
-            time.sleep(1)
+            time.sleep(5)
             web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=email"), "agent@company.com")
-            time.sleep(1)
+            time.sleep(5)
             elements = web_toolkit.browser.get_interactive_elements()
             web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=password"), "theagentcompany")
-            time.sleep(1)
+            time.sleep(5)
             assert web_toolkit.browser.get_url() == "http://the-agent-company.com:8091/tac/"
             print("login to plane successfully")
             web_toolkit.browser.get_screenshot()
