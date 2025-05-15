@@ -129,16 +129,34 @@ def pre_login(web_toolkit: WebToolkit, dependencies: List[str]):
             web_toolkit.browser.visit_page("http://the-agent-company.com:8091")
             elements = web_toolkit.browser.get_interactive_elements()
             time.sleep(5)
+            web_toolkit.browser.get_screenshot()
             web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=email"), "agent@company.com")
-            time.sleep(5)
+            time.sleep(30)
             elements = web_toolkit.browser.get_interactive_elements()
+            web_toolkit.browser.get_screenshot()
+            print(f'elements: {elements}')
+            web_toolkit.browser.scroll_to_top()
+            time.sleep(30)
             try:
                 find_key_by_tag_name(elements, "input, type=password")
             except Exception as e:
                 print(f'Password input not found, try clicking on continue button')
-                web_toolkit.browser.click_id(find_key_by_tag_name(elements, "button"))
+                button_id = find_key_by_tag_name(elements, "button")
+                print(f'button_id: {button_id}')
+                web_toolkit.browser.click_id(button_id)
                 time.sleep(5)
+                web_toolkit.browser.get_screenshot()
                 elements = web_toolkit.browser.get_interactive_elements()
+                print(f'elements: {elements}')
+            try:
+                find_key_by_tag_name(elements, "input, type=password")
+            except Exception as e:
+                print(f'Password input not found, try pressing enter')
+                web_toolkit.browser.page.keyboard.press("Enter")
+                time.sleep(5)
+                web_toolkit.browser.get_screenshot()
+                elements = web_toolkit.browser.get_interactive_elements()
+                print(f'elements: {elements}')
             web_toolkit.browser.fill_input_id(find_key_by_tag_name(elements, "input, type=password"), "theagentcompany")
             time.sleep(5)
             assert web_toolkit.browser.get_url() == "http://the-agent-company.com:8091/tac/"
@@ -177,7 +195,11 @@ def main():
     web_toolkit.browser.init()
 
     # Login to the websites
-    pre_login(web_toolkit, dependencies)
+    try:
+        pre_login(web_toolkit, dependencies)
+    except Exception as e:
+        print(f'Error logging in to the websites: {e}')
+        raise e
 
     # Run the society
     _, chat_history, token_count = run_society(society)
