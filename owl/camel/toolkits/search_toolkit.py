@@ -705,7 +705,7 @@ class SearchToolkit(BaseToolkit):
         search_agent = ChatAgent(
             "You are a helpful search agent.",
             model=self.model,
-            tools=[FunctionTool(self.search_duckduckgo),FunctionTool(self.search_wiki), FunctionTool(self.search_google), FunctionTool(self.search_archived_webpage)]
+            tools=[FunctionTool(self.search_google), FunctionTool(self.search_duckduckgo),FunctionTool(self.search_wiki), FunctionTool(self.search_archived_webpage)]
         )
 
         prompt = f"""
